@@ -1,0 +1,35 @@
+name: auto-self-check
+on:
+  schedule:
+    # update every day, 04:00 UTC => 13:00 (GMT+9)
+    - cron: "0 23 * * *"
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      USER_NAME: ${{ secrets.NAME }}
+      USER_BIRTH: ${{ secrets.BIRTH }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      ORG_CODE: ${{ secrets.ORG_CODE }}
+    steps:
+      - uses: actions/checkout@v2
+        
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: check
+        run: |
+          python run.py
+          
