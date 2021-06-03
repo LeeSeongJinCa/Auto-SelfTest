@@ -12,7 +12,10 @@ jobs:
   check:
     runs-on: ubuntu-latest
     env:
-      SECRET_KEY: ${{ secrets.SECRET_KEY }}
+      USER_NAME: ${{ secrets.NAME }}
+      USER_BIRTH: ${{ secrets.BIRTH }}
+      PASSWORD: ${{ secrets.PASSWORD }}
+      ORG_CODE: ${{ secrets.ORG_CODE }}
     steps:
       - uses: actions/checkout@v2
         
